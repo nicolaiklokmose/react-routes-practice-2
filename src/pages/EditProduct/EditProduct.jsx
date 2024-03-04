@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 function EditProductPage(props) {
 
   const [productToUpdate, setProductToUpdate] = useState(null);
+  const { id } = useParams();
 
   console.log({ productToUpdate });
 
+  useEffect(() => {
+    if (props.products && id) {
+      const matchingProduct = props.products.find(
+        (product) => Number(product.id) == Number(id)
+      );
+      setProductToUpdate(matchingProduct);
+    }
+  }, [props.products, id])
   /** TODO: Write code to set the `productToUpdate` state with the product data
    *  based on the ID that we get from the URL path parameter.
    *  You will need to use: `props`, `useParams`, and `useEffect` to achieve this.
@@ -20,6 +30,7 @@ function EditProductPage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    props.onProductUpdate(productToUpdate); // Callback to update the product in parent component
   }
 
   if (!productToUpdate) return <div>Loading...</div>;

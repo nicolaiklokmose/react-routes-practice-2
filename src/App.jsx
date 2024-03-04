@@ -4,6 +4,7 @@ import { appsData, productsData } from './data.js';
 import Home from './pages/Home/Home';
 import ProductsPage from './pages/Products/ProductsPage';
 import ViewProductPage from './pages/ViewProduct/ViewProductPage';
+import EditProduct from './pages/EditProduct/EditProduct'
 import './App.css'
 
 export default function App() {
@@ -11,6 +12,14 @@ export default function App() {
   const [apps, setApps] = useState(appsData);
 
   console.log({ products, apps });
+
+   // Function to update product
+   function updateProduct(updatedProduct) {
+    const updatedProducts = products.map(product =>
+      product.id === updatedProduct.id ? updatedProduct : product
+    );
+    setProducts(updatedProducts);
+  }
 
   return (
     <div className="App">
@@ -33,6 +42,7 @@ export default function App() {
          Route should be /products/:id/edit and it should use
          the EditProduct element
          */}
+         <Route path="/products/:id/edit" element={<EditProduct products={products} onProductUpdate={updateProduct} />} />
         <Route path="/products/:id" element={<ViewProductPage products={products} />} />
         <Route path="/products" element={<ProductsPage products={products} />}/>
         <Route path="/" element={<Home />} />

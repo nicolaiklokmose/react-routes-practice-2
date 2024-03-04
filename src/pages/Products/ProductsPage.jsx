@@ -17,7 +17,11 @@ function ProductsPage(props) {
               <Link to={`/products/${product.id}`}>
                 View Product
               </Link>
+              <p></p>
               {/* TODO: Add a link to the "edit" page here. */}
+              <Link to={`/products/${product.id}/edit`}>
+                Edit Product
+              </Link>
             </li>
           );
         })}
